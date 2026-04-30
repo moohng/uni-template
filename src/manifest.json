@@ -1,0 +1,22 @@
+{
+    "name" : "turn-money-app",
+    "appid" : "",
+    "description" : "",
+    "versionName" : "1.0.0",
+    "versionCode" : "100",
+    "transformPx" : false,
+    "mp-weixin" : {
+        "appid": "wx79fd704b15fe3852",
+        "setting" : {
+            "urlCheck" : false
+        },
+        "usingComponents" : true,
+        "lazyCodeLoading" : "requiredComponents",
+        "permission": {
+            "scope.writePhotosAlbum": {
+                "desc": "保存海报到相册"
+            }
+        }
+    },
+    "vueVersion" : "3"
+}
