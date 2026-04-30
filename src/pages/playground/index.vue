@@ -9,17 +9,11 @@
 
       <!-- 主题切换器 -->
       <view class="grid grid-cols-4 gap-4 w-full px-4 mb-12">
-        <view
-          v-for="theme in THEMES"
-          :key="theme.id"
-          class="flex flex-col items-center gap-2"
-          @click="appStore.setTheme(theme.id)"
-        >
-          <view
-            class="size-12 rounded-full border-4 transition-all"
+        <view v-for="theme in THEMES" :key="theme.id" class="flex flex-col items-center gap-2"
+          @click="appStore.setTheme(theme.id)">
+          <view class="size-12 rounded-full border-4 transition-all"
             :class="appStore.themeId === theme.id ? 'border-slate-300 scale-110 shadow-lg' : 'border-transparent'"
-            :style="{ backgroundColor: theme.color }"
-          ></view>
+            :style="{ backgroundColor: theme.color }"></view>
           <text class="text-xs font-medium text-slate-600">{{ theme.name }}</text>
         </view>
       </view>
@@ -31,10 +25,7 @@
           <view class="text-sm opacity-80">会自动随主题颜色变化。</view>
         </view>
 
-        <button
-          class="w-full py-4 bg-primary text-white rounded-2xl font-bold shadow-lg transition-transform active:scale-95"
-          @click="onToast"
-        >
+        <button class="reset-btn btn bg-primary text-white shadow-lg" @click="onToast">
           主题色按钮 (bg-primary)
         </button>
       </view>

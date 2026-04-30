@@ -3,7 +3,31 @@ import { onLaunch, onShow, onHide } from "@dcloudio/uni-app";
 
 onLaunch(() => {
   console.log("App Launch");
+  checkUpdate();
 });
+
+/**
+ * 小程序版本更新检查
+ */
+function checkUpdate() {
+  // #ifdef MP-WEIXIN
+  const updateManager = uni.getUpdateManager();
+  updateManager.onCheckForUpdate((res) => {
+    if (res.hasUpdate) {
+      console.log('有新版本可用');
+    }
+  });
+  updateManager.onUpdateReady(() => {
+    uni.showModal({
+      title: '更新提示',
+      content: '新版本已经准备好，是否重启应用？',
+      success: (res) => {
+        if (res.confirm) updateManager.applyUpdate();
+      },
+    });
+  });
+  // #endif
+}
 
 onShow(() => {
   console.log("App Show");
@@ -12,6 +36,13 @@ onShow(() => {
 onHide(() => {
   console.log("App Hide");
 });
+
+// 监听全局报错 (非 Vue 报错)
+// #ifdef MP-WEIXIN
+uni.onError((err) => {
+  console.error('Global Error:', err);
+});
+// #endif
 </script>
 
 <style lang="scss">

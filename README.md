@@ -28,6 +28,10 @@
 - **类型检查:** `pnpm type-check`
 
 ### 技术规范与约束 (微信小程序)
+- **SEO 与搜索优化 (WSEO)**:
+  - **标题管理**: 必须在每个页面的 `PageView` 容器上设置 `title` 属性。
+  - **索引策略**: 参考 `src/sitemap.json`，确保核心页面允许爬虫抓取。
+  - **路径语义化**: 页面路径应能反映内容，例如 `/pages/product/detail` 优于 `/pages/p/d`。
 - **样式方案:** 使用 UnoCSS 配合 `unocss-preset-weapp`。
   - **布局约束**: `space-x/y` 或 `divide-x/y` 在小程序端无效。**解决方案**: 直接子级必须是 `view` 标签，或使用 `flex` + `gap`。
   - **色彩/透明度约束**: `primary` 等基于 CSS 变量的颜色不支持 `bg-primary/10` 动态写法。**解决方案**: 必须在 `unocss.config.ts` 中预定义静态规则（如 `bg-primary_10`）。

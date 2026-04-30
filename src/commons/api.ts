@@ -13,6 +13,7 @@ async function request<T = any>(options: UniApp.RequestOptions & { showLoading?:
 
   const token = uni.getStorageSync('token');
   const openid = uni.getStorageSync('openid');
+
   const header = {
     'Content-Type': 'application/json',
     'x-wx-openid': openid,
@@ -23,15 +24,16 @@ async function request<T = any>(options: UniApp.RequestOptions & { showLoading?:
 
   return new Promise((resolve, reject) => {
     uni.request({
+      timeout: 15000, // 增加超时控制
       ...options,
       header,
-      success: (res: any) => {
+      success: (res) => {
         if (options.showLoading) ui.hideLoading();
         resolve(res.data as T);
       },
       fail: (err) => {
         if (options.showLoading) ui.hideLoading();
-        ui.toast('网络请求失败');
+        ui.toast('网络连接超时或失败');
         reject(err);
       },
     });

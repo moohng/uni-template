@@ -1,4 +1,5 @@
 <template>
+  <page-meta v-if="title" :page-title="title"></page-meta>
   <view :class="appStore.themeClass" class="page-view-container min-h-screen bg-slate-50 transition-colors duration-300">
     <!-- 顶部状态栏占位 (仅自定义导航栏时需要) -->
     <view v-if="statusBar" :style="{ height: appStore.statusBarHeight + 'px' }" class="w-full"></view>
@@ -17,6 +18,8 @@
 import { useAppStore } from '@/store/app';
 
 interface Props {
+  /** 页面标题 (用于 SEO 和导航栏) */
+  title?: string;
   /** 是否留出状态栏高度 */
   statusBar?: boolean;
   /** 是否开启底部安全区适配 */
