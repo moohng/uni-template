@@ -10,9 +10,9 @@ export default defineConfig({
     // https://github.com/MellowCo/unocss-preset-weapp
     presetWeapp({
       whRpx: false,
-    }),
+    } as any),
     // attributify autocomplete
-    presetWeappAttributify(),
+    presetWeappAttributify() as any,
     presetIcons({
       extraProperties: {
         display: 'inline-block',
@@ -43,13 +43,13 @@ export default defineConfig({
   transformers: [
     transformerDirectives({
       enforce: 'pre',
-    }),
+    }) as any,
 
     // https://github.com/MellowCo/unocss-preset-weapp/tree/main/src/transformer/transformerAttributify
-    transformerAttributify(),
+    transformerAttributify() as any,
 
     // https://github.com/MellowCo/unocss-preset-weapp/tree/main/src/transformer/transformerClass
-    transformerClass(),
+    transformerClass() as any,
   ],
   rules: [
     [

@@ -43,17 +43,17 @@ export const permission = {
     const setting = await new Promise<UniApp.AuthSetting>((resolve) => {
       uni.getSetting({
         success: (res) => resolve(res.authSetting),
-        fail: () => resolve({}),
+        fail: () => resolve({} as UniApp.AuthSetting),
       });
     });
 
     // 2. 如果已经授权，直接返回 true
-    if (setting[scope]) {
+    if (setting[scope as keyof UniApp.AuthSetting]) {
       return true;
     }
 
     // 3. 如果是第一次申请（setting[scope] 为 undefined），直接发起请求
-    if (setting[scope] === undefined) {
+    if (setting[scope as keyof UniApp.AuthSetting] === undefined) {
       return new Promise((resolve) => {
         uni.authorize({
           scope,
@@ -74,13 +74,13 @@ export const permission = {
     });
 
     if (confirmed) {
-      const openSettingRes = await new Promise<UniApp.OpenSettingRes>((resolve) => {
+      const openSettingRes = await new Promise<{ authSetting: UniApp.AuthSetting }>((resolve) => {
         uni.openSetting({
-          success: (res) => resolve(res),
-          fail: () => resolve({ authSetting: {} } as any),
+          success: (res: any) => resolve(res),
+          fail: () => resolve({ authSetting: {} as UniApp.AuthSetting }),
         });
       });
-      return !!openSettingRes.authSetting[scope];
+      return !!openSettingRes.authSetting[scope as keyof UniApp.AuthSetting];
     }
 
     return false;
