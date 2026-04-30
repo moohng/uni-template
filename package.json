@@ -7,6 +7,7 @@
     "dev:mp-weixin": "uni -p mp-weixin",
     "build:h5": "uni build",
     "build:mp-weixin": "uni build -p mp-weixin",
+    "upload": "node scripts/upload.js",
     "type-check": "vue-tsc --noEmit"
   },
   "dependencies": {
@@ -48,6 +49,7 @@
     "unocss": "^0.64.0",
     "unocss-preset-weapp": "^0.65.0",
     "unplugin-transform-class": "^0.5.3",
+    "miniprogram-ci": "^2.0.10",
     "vite": "5.2.8",
     "vue-tsc": "^1.0.24"
   }

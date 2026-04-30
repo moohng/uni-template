@@ -1,0 +1,38 @@
+name: Build and Deploy WeChat Mini Program
+
+on:
+  push:
+    tags:
+      - 'v*' # 当推送 v1.0.0 这种格式的 tag 时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build:mp-weixin
+
+      - name: Create Private Key
+        run: echo "${{ secrets.WX_PRIVATE_KEY }}" > private.key
+
+      - name: Upload to WeChat
+        run: pnpm upload
+        env:
+          APP_VERSION: ${{ github.ref_name }} # 获取当前 tag 名作为版本号
