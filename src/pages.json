@@ -1,9 +1,9 @@
 {
 	"pages": [
 		{
-			"path": "pages/index/index",
+			"path": "pages/playground/index",
 			"style": {
-				"navigationBarTitleText": "",
+				"navigationBarTitleText": "Playground",
 				"navigationStyle": "custom"
 			}
 		}

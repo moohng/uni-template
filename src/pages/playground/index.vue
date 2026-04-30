@@ -4,8 +4,8 @@
       <view class="size-20 bg-white rounded-3xl shadow-xl flex items-center justify-center mb-6">
         <text class="i-lucide-palette size-10 text-primary"></text>
       </view>
-      <view class="text-2xl font-bold text-slate-800 mb-2">主题与容器示例</view>
-      <view class="text-slate-400 text-sm mb-8 text-center">当前页面使用了 PageView 容器，自动集成了主题切换逻辑。</view>
+      <view class="text-2xl font-bold text-slate-800 mb-2">Playground</view>
+      <view class="text-slate-400 text-sm mb-8 text-center">这里是脚手架的功能演示区。你可以在此测试主题切换、交互弹窗以及 PageView 容器的特性。</view>
 
       <!-- 主题切换器 -->
       <view class="grid grid-cols-4 gap-4 w-full px-4 mb-12">

@@ -31,6 +31,13 @@ export default defineConfig({
   shortcuts: [
     {
       center: 'flex justify-center items-center',
+      col: 'flex flex-col',
+      'col-center': 'flex flex-col items-center justify-center',
+      'row-between': 'flex items-center justify-between',
+      'card-base': 'bg-white rounded-2xl p-4 shadow-sm',
+      'text-main': 'text-slate-800 text-base font-medium',
+      'text-sub': 'text-slate-400 text-sm',
+      'btn': 'flex items-center justify-center gap-2 block p-4 bg-slate-100 text-slate-600 font-bold rounded-full transition-all active:scale-95',
     },
   ],
   transformers: [
