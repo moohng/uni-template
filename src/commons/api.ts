@@ -1,4 +1,5 @@
 import { getAppId } from './utils';
+import { ui } from './ui';
 
 const COMMON_URL = import.meta.env.VITE_COMMON_URL;
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -7,7 +8,9 @@ const BASE_URL = import.meta.env.VITE_BASE_URL;
  * 核心请求封装
  * 支持自动携带基础 Header
  */
-async function request<T = any>(options: UniApp.RequestOptions): Promise<T> {
+async function request<T = any>(options: UniApp.RequestOptions & { showLoading?: boolean }): Promise<T> {
+  if (options.showLoading) ui.loading();
+
   const token = uni.getStorageSync('token');
   const openid = uni.getStorageSync('openid');
   const header = {
@@ -23,10 +26,14 @@ async function request<T = any>(options: UniApp.RequestOptions): Promise<T> {
       ...options,
       header,
       success: (res: any) => {
-        // 可以在这里统一处理业务码 (例如 code === 200)
+        if (options.showLoading) ui.hideLoading();
         resolve(res.data as T);
       },
-      fail: (err) => reject(err),
+      fail: (err) => {
+        if (options.showLoading) ui.hideLoading();
+        ui.toast('网络请求失败');
+        reject(err);
+      },
     });
   });
 }
