@@ -53,6 +53,16 @@ async function main() {
     '__WX_APPID__': appid,
   });
 
+  console.log('\n🧹 清理开发专用文件...');
+  const dirsToRemove = ['.github', '.opencode', 'packages'];
+  for (const dir of dirsToRemove) {
+    const dirPath = path.join(rootDir, dir);
+    if (fs.existsSync(dirPath)) {
+      fs.rmSync(dirPath, { recursive: true, force: true });
+      console.log(`  ✅ 删除 ${dir}/`);
+    }
+  }
+
   console.log('\n🔄 重新初始化 Git 仓库...');
   const gitDir = path.join(rootDir, '.git');
   if (fs.existsSync(gitDir)) {
@@ -70,8 +80,24 @@ async function main() {
 
   console.log('\n✅ 初始化完成！\n');
   console.log('📦 下一步:');
-  console.log('   pnpm install');
   console.log('   pnpm dev:mp-weixin\n');
+
+  console.log('🧹 清理初始化文件...');
+
+  // 先清理 package.json 配置
+  const pkgPath = path.join(rootDir, 'package.json');
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+  delete pkg.scripts.init;
+  delete pkg.scripts.postinstall;
+  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf-8');
+  console.log('  ✅ 清理 init 脚本配置');
+
+  // 最后删除 scripts 目录（脚本会继续执行完成）
+  const scriptsDir = path.join(rootDir, 'scripts');
+  if (fs.existsSync(scriptsDir)) {
+    fs.rmSync(scriptsDir, { recursive: true, force: true });
+    console.log('  ✅ 删除 scripts/');
+  }
 
   rl.close();
 }

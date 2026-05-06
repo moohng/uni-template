@@ -25,3 +25,6 @@ dist
 *.sln
 *.sw?
 .vercel
+
+# Test directories
+.test-projects

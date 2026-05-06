@@ -81,8 +81,9 @@ async function main() {
   deleteDir(tempDir);
 
   console.log('🧹 清理模板开发文件...');
-  deleteDir(path.join(projectDir, 'packages'));
+  deleteDir(path.join(projectDir, '.github'));
   deleteDir(path.join(projectDir, '.opencode'));
+  deleteDir(path.join(projectDir, 'packages'));
   deleteDir(path.join(projectDir, 'scripts'));
   console.log('  ✅ 清理完成\n');
 
@@ -94,10 +95,14 @@ async function main() {
 
   console.log('\n📝 正在替换配置...\n');
 
-  replaceInFile(path.join(projectDir, 'package.json'), {
-    '__PROJECT_NAME__': projectName,
-    '__PROJECT_DESC__': projectDesc,
-  });
+  const pkgPath = path.join(projectDir, 'package.json');
+  const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+  pkg.name = projectName;
+  pkg.description = projectDesc;
+  delete pkg.scripts.init;
+  delete pkg.scripts.postinstall;
+  fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf-8');
+
   replaceInFile(path.join(projectDir, 'src/manifest.json'), {
     '__PROJECT_NAME__': projectName,
     '__PROJECT_DESC__': projectDesc,

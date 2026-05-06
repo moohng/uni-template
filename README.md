@@ -25,9 +25,9 @@ pnpm dev:mp-weixin
 
 1. 访问 https://github.com/moohng/uni-template
 2. 点击 "Use this template" 创建新仓库
-3. 克隆后运行:
+3. 克隆到本地后运行:
    ```bash
-   pnpm install
+   pnpm install    # 自动完成初始化配置
    pnpm dev:mp-weixin
    ```
 
@@ -36,7 +36,7 @@ pnpm dev:mp-weixin
 ```bash
 npx degit moohng/uni-template my-project
 cd my-project
-pnpm install
+pnpm install    # 自动完成初始化配置
 pnpm dev:mp-weixin
 ```
 
@@ -49,6 +49,19 @@ pnpm dev:mp-weixin
 | `pnpm dev:h5` | H5 开发模式 |
 | `pnpm build:h5` | H5 打包 |
 | `pnpm type-check` | TypeScript 类型检查 |
+
+### 初始化说明
+
+**使用 `npx @unimp/create` 创建**：脚手架会自动完成所有初始化配置，无需额外操作。
+
+**使用 GitHub Template 或 degit 克隆**：首次运行 `pnpm install` 时会**自动**：
+
+1. 提示输入项目配置（名称、描述、AppID）
+2. 替换配置占位符
+3. 清理开发专用目录（`.github/`、`.opencode/`、`packages/`、`scripts/`）
+4. 重新初始化 Git 仓库
+
+初始化完成后，初始化脚本会自动删除，不会残留。
 
 ## 目录结构
 

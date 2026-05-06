@@ -9,7 +9,8 @@
     "build:mp-weixin": "uni build -p mp-weixin",
     "upload": "node scripts/upload.js",
     "type-check": "vue-tsc --noEmit",
-    "init": "node scripts/init.js"
+    "init": "node scripts/init.js",
+    "postinstall": "node scripts/init.js"
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-5000720260410001",
