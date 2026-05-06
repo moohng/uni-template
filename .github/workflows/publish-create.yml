@@ -21,6 +21,7 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
+          scope: '@unimp'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -33,15 +34,11 @@ jobs:
           VERSION=$(node -p "require('./packages/create/package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
-      - name: Setup npm auth
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-          echo "@unimp:registry=https://registry.npmjs.org/" >> .npmrc
-
       - name: Publish to npm
         working-directory: packages/create
-        run: |
-          npm publish --access public --provenance
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish success
         run: echo "Published @unimp/create@${{ steps.version.outputs.version }}"
