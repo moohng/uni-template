@@ -8,6 +8,7 @@ const targetDir = args[0] || '.';
 
 const GITHUB_REPO = 'https://github.com/moohng/uni-template.git';
 const projectDir = path.resolve(process.cwd(), targetDir);
+const isCreateMode = targetDir !== '.';
 
 function replaceInFile(filePath, replacements) {
   if (!fs.existsSync(filePath)) return;
@@ -40,6 +41,21 @@ function deleteDir(dir) {
   fs.rmSync(dir, { recursive: true, force: true });
 }
 
+function getIgnoreList(projectDir) {
+  const initignorePath = path.join(projectDir, '.initignore');
+  const ignoreList = [];
+  if (fs.existsSync(initignorePath)) {
+    const content = fs.readFileSync(initignorePath, 'utf-8');
+    content.split('\n').forEach(line => {
+      line = line.trim();
+      if (line && !line.startsWith('#')) {
+        ignoreList.push(line.replace(/\/$/, ''));
+      }
+    });
+  }
+  return ignoreList;
+}
+
 async function ask(question) {
   const readline = require('readline');
   const rl = readline.createInterface({
@@ -54,40 +70,15 @@ async function ask(question) {
   });
 }
 
-async function main() {
-  console.log('\n🚀 创建新项目\n');
+async function initProject() {
+  const projectName = isCreateMode
+    ? (targetDir || path.basename(process.cwd()))
+    : await ask('项目名称 (如: my-uni-app): ');
 
-  if (targetDir !== '.' && fs.existsSync(projectDir)) {
-    console.error(`❌ 目录 ${targetDir} 已存在`);
+  if (!isCreateMode && !projectName) {
+    console.log('❌ 项目名称不能为空');
     process.exit(1);
   }
-
-  const tempDir = path.join(process.cwd(), '.uni-template-temp');
-
-  console.log('📥 从 GitHub 拉取模板...');
-  try {
-    deleteDir(tempDir);
-    execSync(`git clone --depth 1 ${GITHUB_REPO} .uni-template-temp`, {
-      cwd: process.cwd(),
-      stdio: 'pipe',
-    });
-    console.log('  ✅ 模板下载完成\n');
-  } catch (e) {
-    console.error('❌ 模板拉取失败，请检查网络连接或仓库地址');
-    process.exit(1);
-  }
-
-  copyDir(tempDir, projectDir);
-  deleteDir(tempDir);
-
-  console.log('🧹 清理模板开发文件...');
-  deleteDir(path.join(projectDir, '.github'));
-  deleteDir(path.join(projectDir, '.opencode'));
-  deleteDir(path.join(projectDir, 'packages'));
-  deleteDir(path.join(projectDir, 'scripts'));
-  console.log('  ✅ 清理完成\n');
-
-  const projectName = targetDir || process.cwd().split('/').pop();
 
   const projectDesc = await ask('项目描述: ') || 'A uni-app project';
   const appid = await ask('微信小程序 AppID (可留空): ') || '';
@@ -102,6 +93,7 @@ async function main() {
   delete pkg.scripts.init;
   delete pkg.scripts.postinstall;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf-8');
+  console.log('  ✅ package.json');
 
   replaceInFile(path.join(projectDir, 'src/manifest.json'), {
     '__PROJECT_NAME__': projectName,
@@ -110,13 +102,73 @@ async function main() {
     '__WX_APPID__': appid,
   });
 
-  console.log('\n✅ 项目创建完成！\n');
+  console.log('\n🧹 清理开发专用文件...');
+
+  const ignoreList = getIgnoreList(projectDir);
+  // scripts/ needs to be deleted last (this script may be inside it)
+  for (const dir of ignoreList) {
+    if (dir === 'scripts') continue;
+    const dirPath = path.join(projectDir, dir);
+    if (fs.existsSync(dirPath)) {
+      deleteDir(dirPath);
+      console.log(`  ✅ 删除 ${dir}`);
+    }
+  }
+
+  console.log('\n🔄 清理 Git 历史...');
+  const gitDir = path.join(projectDir, '.git');
+  if (fs.existsSync(gitDir)) {
+    deleteDir(gitDir);
+    console.log('  ✅ Git 历史已清理');
+  }
+
+  console.log('\n✅ 初始化完成！\n');
   console.log('📦 下一步:');
-  if (targetDir) {
-    console.log(`   cd ${targetDir === '.' ? '' : targetDir}`);
+  if (isCreateMode) {
+    console.log(`   cd ${targetDir}`);
   }
   console.log('   pnpm install');
   console.log('   pnpm dev:mp-weixin\n');
+
+  // Clean up self and scripts/ last
+  const scriptsDir = path.join(projectDir, 'scripts');
+  if (fs.existsSync(scriptsDir)) {
+    deleteDir(scriptsDir);
+    console.log('🧹 清理初始化文件...');
+    console.log('  ✅ 删除 scripts/');
+  }
+}
+
+async function main() {
+  console.log(isCreateMode ? '\n🚀 创建新项目\n' : '\n🚀 初始化新项目\n');
+
+  // Create mode: download from GitHub
+  if (isCreateMode) {
+    if (fs.existsSync(projectDir)) {
+      console.error(`❌ 目录 ${targetDir} 已存在`);
+      process.exit(1);
+    }
+
+    const tempDir = path.join(process.cwd(), '.uni-template-temp');
+
+    console.log('📥 从 GitHub 拉取模板...');
+    try {
+      deleteDir(tempDir);
+      execSync(`git clone --depth 1 ${GITHUB_REPO} .uni-template-temp`, {
+        cwd: process.cwd(),
+        stdio: 'pipe',
+      });
+      console.log('  ✅ 模板下载完成\n');
+    } catch (e) {
+      console.error('❌ 模板拉取失败，请检查网络连接或仓库地址');
+      process.exit(1);
+    }
+
+    copyDir(tempDir, projectDir);
+    deleteDir(tempDir);
+  }
+
+  await initProject();
 }
 
 main().catch(console.error);

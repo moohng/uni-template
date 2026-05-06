@@ -1,0 +1,8 @@
+# Directories to ignore during project initialization
+.github/
+.opencode/
+packages/
+
+# Files to ignore
+.env.local
+.initignore
