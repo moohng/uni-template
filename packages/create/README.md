@@ -39,7 +39,6 @@ create my-project
 1. 从 GitHub 拉取最新模板
 2. 清理开发专用目录（`.github/`、`.opencode/`、`packages/`、`scripts/`）
 3. 替换项目配置占位符
-4. 初始化 Git 仓库
 
 安装依赖并启动开发服务器：
 

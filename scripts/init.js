@@ -63,14 +63,12 @@ async function main() {
     }
   }
 
-  console.log('\n🔄 重新初始化 Git 仓库...');
+  console.log('\n🔄 清理 Git 历史...');
   const gitDir = path.join(rootDir, '.git');
   if (fs.existsSync(gitDir)) {
     fs.rmSync(gitDir, { recursive: true, force: true });
-    console.log('  ✅ 清理旧 Git 历史');
+    console.log('  ✅ Git 历史已清理');
   }
-  execSync('git init', { cwd: rootDir, stdio: 'pipe' });
-  console.log('  ✅ 初始化新 Git 仓库');
 
   const envLocal = path.join(rootDir, '.env.local');
   if (fs.existsSync(envLocal)) {

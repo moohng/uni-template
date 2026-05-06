@@ -110,14 +110,6 @@ async function main() {
     '__WX_APPID__': appid,
   });
 
-  console.log('\n🔄 初始化 Git 仓库...');
-  try {
-    execSync('git init', { cwd: projectDir, stdio: 'pipe' });
-    console.log('  ✅ Git 仓库初始化完成');
-  } catch (e) {
-    console.log('  ⚠️  Git 初始化跳过');
-  }
-
   console.log('\n✅ 项目创建完成！\n');
   console.log('📦 下一步:');
   if (targetDir) {
