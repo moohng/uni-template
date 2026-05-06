@@ -1,0 +1,25 @@
+{
+  "name": "create-unimp",
+  "version": "1.0.0",
+  "description": "Create a new Uni-app project from template",
+  "bin": {
+    "create-unimp": "./index.cjs"
+  },
+  "files": [
+    "index.cjs"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "keywords": [
+    "uni-app",
+    "template",
+    "scaffold"
+  ],
+  "author": "前端星河",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

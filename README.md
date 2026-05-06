@@ -15,7 +15,7 @@
 ### 方式 1: 使用 create 命令（推荐）
 
 ```bash
-npx @unimp/create my-project
+npx create-unimp my-project
 cd my-project
 pnpm install
 pnpm dev:mp-weixin
@@ -52,7 +52,7 @@ pnpm dev:mp-weixin
 
 ### 初始化说明
 
-**使用 `npx @unimp/create` 创建**：脚手架会自动完成所有初始化配置，无需额外操作。
+**使用 `npx create-unimp` 创建**：脚手架会自动完成所有初始化配置，无需额外操作。
 
 **使用 GitHub Template 或 degit 克隆**：首次运行 `pnpm install` 时会**自动**：
 

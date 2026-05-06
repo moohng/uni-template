@@ -1,4 +1,4 @@
-name: Publish @unimp/create to npm
+name: Publish create-unimp to npm
 
 on:
   push:
@@ -21,7 +21,6 @@ jobs:
         with:
           node-version: 18
           registry-url: 'https://registry.npmjs.org'
-          scope: '@unimp'
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
@@ -35,15 +34,15 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Update package.json version
-        working-directory: packages/create
+        working-directory: packages/create-unimp
         run: |
           node -e "const pkg=require('./package.json'); pkg.version='${{ steps.version.outputs.version }}'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2)+'\n')"
 
       - name: Publish to npm
-        working-directory: packages/create
+        working-directory: packages/create-unimp
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish success
-        run: echo "Published @unimp/create@${{ steps.version.outputs.version }}"
+        run: echo "Published create-unimp@${{ steps.version.outputs.version }}"
