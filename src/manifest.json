@@ -1,12 +1,12 @@
 {
-    "name" : "turn-money-app",
-    "appid" : "",
-    "description" : "",
+    "name" : "__PROJECT_NAME__",
+    "appid" : "__UNI_APPID__",
+    "description" : "__PROJECT_DESC__",
     "versionName" : "1.0.0",
     "versionCode" : "100",
     "transformPx" : false,
     "mp-weixin" : {
-        "appid": "wx79fd704b15fe3852",
+        "appid": "__WX_APPID__",
         "setting" : {
             "urlCheck" : false
         },
