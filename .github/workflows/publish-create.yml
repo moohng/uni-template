@@ -28,11 +28,16 @@ jobs:
         with:
           version: 8
 
-      - name: Get package version
+      - name: Extract version from tag
         id: version
         run: |
-          VERSION=$(node -p "require('./packages/create/package.json').version")
+          VERSION=${GITHUB_REF#refs/tags/create-v}
           echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Update package.json version
+        working-directory: packages/create
+        run: |
+          node -e "const pkg=require('./package.json'); pkg.version='${{ steps.version.outputs.version }}'; require('fs').writeFileSync('package.json', JSON.stringify(pkg, null, 2)+'\n')"
 
       - name: Publish to npm
         working-directory: packages/create
