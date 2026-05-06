@@ -108,6 +108,12 @@ async function initProject() {
 }
 
 async function main() {
+  // Skip initialization if in development mode (template repository)
+  if (fs.existsSync(path.join(process.cwd(), 'packages/create-unimp'))) {
+    console.log('🔧 开发模式：跳过初始化');
+    return;
+  }
+
   console.log('\n🚀 创建新项目\n');
 
   // Only clone template for create mode (npx create-unimp <dir>)
