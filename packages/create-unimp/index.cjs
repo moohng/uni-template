@@ -8,7 +8,7 @@ const targetDir = args[0] || '.';
 
 const GITHUB_REPO = 'https://github.com/moohng/uni-template.git';
 const projectDir = path.resolve(process.cwd(), targetDir);
-const isCreateMode = targetDir !== '.';
+const isCreateMode = !fs.existsSync(path.join(projectDir, 'src/manifest.json'));
 
 function replaceInFile(filePath, replacements) {
   if (!fs.existsSync(filePath)) return;
@@ -112,7 +112,7 @@ async function main() {
 
   // Only clone template for create mode (npx create-unimp <dir>)
   if (isCreateMode) {
-    if (fs.existsSync(projectDir)) {
+    if (targetDir !== '.' && fs.existsSync(projectDir)) {
       console.error(`❌ 目录 ${targetDir} 已存在`);
       process.exit(1);
     }
