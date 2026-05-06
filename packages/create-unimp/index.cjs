@@ -8,6 +8,7 @@ const targetDir = args[0] || '.';
 
 const GITHUB_REPO = 'https://github.com/moohng/uni-template.git';
 const projectDir = path.resolve(process.cwd(), targetDir);
+const isDevMode = fs.existsSync(path.join(process.cwd(), 'packages/create-unimp'));
 const isCreateMode = !fs.existsSync(path.join(projectDir, 'src/manifest.json'));
 
 function replaceInFile(filePath, replacements) {
@@ -57,7 +58,7 @@ function getIgnoreList(projectDir) {
 }
 
 async function initProject() {
-  const projectName = isCreateMode ? targetDir : path.basename(process.cwd());
+  const projectName = targetDir !== '.' ? targetDir : path.basename(process.cwd());
   const projectDesc = 'A uni-app project';
   const appid = '';
   const uniAppid = '';
@@ -98,23 +99,42 @@ async function initProject() {
     console.log('  ✅ Git 历史已清理');
   }
 
-  console.log('\n✅ 项目创建完成！\n');
-  console.log('📦 下一步:');
-  if (isCreateMode) {
+  console.log('\n📦 安装依赖...\n');
+  try {
+    execSync('pnpm install', {
+      stdio: 'inherit',
+      cwd: projectDir,
+    });
+  } catch (e) {
+    console.error('❌ 依赖安装失败');
+    process.exit(1);
+  }
+
+  console.log('\n✅ 项目初始化完成！\n');
+  console.log('🚀 下一步:');
+  if (isCreateMode && targetDir !== '.') {
     console.log(`   cd ${targetDir}`);
   }
-  console.log('   pnpm install');
   console.log('   pnpm dev:mp-weixin\n');
 }
 
 async function main() {
-  // Skip initialization if in development mode (template repository)
-  if (fs.existsSync(path.join(process.cwd(), 'packages/create-unimp'))) {
+  if (isDevMode) {
     console.log('🔧 开发模式：跳过初始化');
     return;
   }
 
-  console.log('\n🚀 创建新项目\n');
+  console.log('\n🚀 初始化项目\n');
+
+  // Check if already initialized
+  const manifestPath = path.join(projectDir, 'src/manifest.json');
+  if (fs.existsSync(manifestPath)) {
+    const manifest = fs.readFileSync(manifestPath, 'utf-8');
+    if (!manifest.includes('__PROJECT_NAME__')) {
+      console.log('✅ 项目已初始化，跳过此步骤');
+      return;
+    }
+  }
 
   // Only clone template for create mode (npx create-unimp <dir>)
   if (isCreateMode) {

@@ -8,7 +8,7 @@
     "build:h5": "uni build",
     "build:mp-weixin": "uni build -p mp-weixin",
     "type-check": "vue-tsc --noEmit",
-    "postinstall": "node packages/create-unimp/index.cjs ."
+    "init": "node packages/create-unimp/index.cjs ."
   },
   "dependencies": {
     "@dcloudio/uni-app": "3.0.0-5000720260410001",
@@ -16,17 +16,7 @@
     "@dcloudio/uni-app-plus": "3.0.0-5000720260410001",
     "@dcloudio/uni-components": "3.0.0-5000720260410001",
     "@dcloudio/uni-h5": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-alipay": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-baidu": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-harmony": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-jd": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-kuaishou": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-lark": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-qq": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-toutiao": "3.0.0-5000720260410001",
     "@dcloudio/uni-mp-weixin": "3.0.0-5000720260410001",
-    "@dcloudio/uni-mp-xhs": "3.0.0-5000720260410001",
-    "@dcloudio/uni-quickapp-webview": "3.0.0-5000720260410001",
     "lodash-es": "^4.17.21",
     "pinia": "^2.2.6",
     "pinia-plugin-persistedstate": "^4.1.3",
