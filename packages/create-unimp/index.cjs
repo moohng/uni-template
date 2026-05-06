@@ -110,30 +110,32 @@ async function initProject() {
 async function main() {
   console.log('\n🚀 创建新项目\n');
 
+  const tempDir = path.join(process.cwd(), '.uni-template-temp');
+
+  console.log('📥 从 GitHub 拉取模板...');
+  try {
+    deleteDir(tempDir);
+    execSync(`git clone --depth 1 ${GITHUB_REPO} .uni-template-temp`, {
+      cwd: process.cwd(),
+      stdio: 'pipe',
+    });
+    console.log('  ✅ 模板下载完成\n');
+  } catch (e) {
+    console.error('❌ 模板拉取失败，请检查网络连接或仓库地址');
+    process.exit(1);
+  }
+
   if (isCreateMode) {
     if (fs.existsSync(projectDir)) {
       console.error(`❌ 目录 ${targetDir} 已存在`);
-      process.exit(1);
-    }
-
-    const tempDir = path.join(process.cwd(), '.uni-template-temp');
-
-    console.log('📥 从 GitHub 拉取模板...');
-    try {
       deleteDir(tempDir);
-      execSync(`git clone --depth 1 ${GITHUB_REPO} .uni-template-temp`, {
-        cwd: process.cwd(),
-        stdio: 'pipe',
-      });
-      console.log('  ✅ 模板下载完成\n');
-    } catch (e) {
-      console.error('❌ 模板拉取失败，请检查网络连接或仓库地址');
       process.exit(1);
     }
-
     copyDir(tempDir, projectDir);
-    deleteDir(tempDir);
+  } else {
+    copyDir(tempDir, projectDir);
   }
+  deleteDir(tempDir);
 
   await initProject();
 }
