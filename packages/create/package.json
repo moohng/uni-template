@@ -17,5 +17,9 @@
     "scaffold"
   ],
   "author": "前端星河",
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }
