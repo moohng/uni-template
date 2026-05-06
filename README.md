@@ -17,7 +17,6 @@
 ```bash
 npx create-unimp my-project
 cd my-project
-pnpm install
 pnpm dev:mp-weixin
 ```
 
@@ -27,7 +26,7 @@ pnpm dev:mp-weixin
 2. 点击 "Use this template" 创建新仓库
 3. 克隆到本地后运行:
    ```bash
-   pnpm install    # 自动完成初始化配置
+   pnpm run init     # 初始化项目配置并安装依赖
    pnpm dev:mp-weixin
    ```
 
@@ -36,7 +35,7 @@ pnpm dev:mp-weixin
 ```bash
 npx degit moohng/uni-template my-project
 cd my-project
-pnpm install    # 自动完成初始化配置
+pnpm run init       # 初始化项目配置并安装依赖
 pnpm dev:mp-weixin
 ```
 
@@ -50,18 +49,24 @@ pnpm dev:mp-weixin
 | `pnpm build:h5` | H5 打包 |
 | `pnpm type-check` | TypeScript 类型检查 |
 
-### 初始化说明
+## 项目初始化
 
-**使用 `npx create-unimp` 创建**：脚手架会自动完成所有初始化配置，无需额外操作。
+**使用 `npx create-unimp` 创建**：脚手架会自动完成所有配置替换、文件清理和依赖安装。
 
-**使用 GitHub Template 或 degit 克隆**：首次运行 `pnpm install` 时会**自动**：
+**使用 GitHub Template 或 degit 克隆**：下载后请运行以下命令完成初始化：
 
-1. 提示输入项目配置（名称、描述、AppID）
-2. 替换配置占位符
-3. 按 `.initignore` 清理开发专用文件
-4. 清理 Git 历史
+```bash
+pnpm run init
+```
 
-初始化完成后，初始化脚本会自动删除，不会残留。
+该命令会执行以下操作：
+
+1. 替换 `package.json` 和 `manifest.json` 中的占位符
+2. 按 `.initignore` 清理开发专用文件（如 CI 配置、文档等）
+3. 清理 Git 历史，准备新的版本库
+4. 自动安装所有依赖
+
+初始化完成后，`init` 脚本会自动从 `package.json` 中移除。
 
 ## 目录结构
 
