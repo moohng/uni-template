@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -35,14 +35,13 @@ jobs:
 
       - name: Setup npm auth
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
           echo "@unimp:registry=https://registry.npmjs.org/" >> .npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish to npm
         working-directory: packages/create
-        run: npm publish --access public
+        run: |
+          npm publish --access public --provenance
 
       - name: Publish success
         run: echo "Published @unimp/create@${{ steps.version.outputs.version }}"
