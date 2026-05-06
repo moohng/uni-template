@@ -55,6 +55,32 @@ pnpm dev:mp-weixin
 - pnpm（推荐）或 npm
 - Git
 
+## 发布流程（维护者）
+
+### 1. 首次配置
+
+在 GitHub 仓库 Settings → Secrets and variables → Actions 中添加 `NPM_TOKEN`：
+- 访问 https://www.npmjs.com/settings/YOUR_USERNAME/tokens
+- 创建 Classic Token，权限选择 `Publish`
+- 在 GitHub Secrets 中添加为 `NPM_TOKEN`
+
+### 2. 发布新版本
+
+```bash
+# 1. 修改版本号
+# 编辑 packages/create/package.json 中的 version 字段
+
+# 2. 提交更改
+git add packages/create/package.json
+git commit -m "chore: bump create version to X.Y.Z"
+
+# 3. 创建并推送 tag（必须以 create-v 开头）
+git tag create-v1.0.0
+git push origin create-v1.0.0
+```
+
+推送 tag 后会自动触发 GitHub Action 发布到 npm。
+
 ## License
 
 MIT
