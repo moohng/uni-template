@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 const { execSync } = require('child_process');
 
 const args = process.argv.slice(2);
@@ -38,7 +39,11 @@ function copyDir(src, dest) {
 
 function deleteDir(dir) {
   if (!fs.existsSync(dir)) return;
-  fs.rmSync(dir, { recursive: true, force: true });
+  try {
+    fs.rmSync(dir, { recursive: true, force: true });
+  } catch (e) {
+    // Ignore deletion errors (e.g., file locks on Windows)
+  }
 }
 
 function getIgnoreList(projectDir) {
@@ -137,13 +142,12 @@ async function main() {
       process.exit(1);
     }
 
-    const tempDir = path.join(process.cwd(), '.uni-template-temp');
+    const tempDir = path.join(os.tmpdir(), `uni-template-temp-${Date.now()}`);
 
     console.log('📥 从 GitHub 拉取模板...');
     try {
       deleteDir(tempDir);
-      execSync(`git clone --depth 1 ${GITHUB_REPO} .uni-template-temp`, {
-        cwd: process.cwd(),
+      execSync(`git clone --depth 1 "${GITHUB_REPO}" "${tempDir}"`, {
         stdio: 'pipe',
       });
       console.log('  ✅ 模板下载完成\n');
