@@ -56,33 +56,11 @@ function getIgnoreList(projectDir) {
   return ignoreList;
 }
 
-async function ask(question) {
-  const readline = require('readline');
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
-  return new Promise((resolve) => {
-    rl.question(question, (answer) => {
-      rl.close();
-      resolve(answer.trim());
-    });
-  });
-}
-
 async function initProject() {
-  const projectName = isCreateMode
-    ? (targetDir || path.basename(process.cwd()))
-    : await ask('项目名称 (如: my-uni-app): ');
-
-  if (!isCreateMode && !projectName) {
-    console.log('❌ 项目名称不能为空');
-    process.exit(1);
-  }
-
-  const projectDesc = await ask('项目描述: ') || 'A uni-app project';
-  const appid = await ask('微信小程序 AppID (可留空): ') || '';
-  const uniAppid = await ask('Uni-app AppID (可留空): ') || '';
+  const projectName = isCreateMode ? targetDir : path.basename(process.cwd());
+  const projectDesc = 'A uni-app project';
+  const appid = '';
+  const uniAppid = '';
 
   console.log('\n📝 正在替换配置...\n');
 
