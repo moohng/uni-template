@@ -8,7 +8,6 @@ const targetDir = args[0] || '.';
 
 const GITHUB_REPO = 'https://github.com/moohng/uni-template.git';
 const projectDir = path.resolve(process.cwd(), targetDir);
-const isDevMode = fs.existsSync(path.join(process.cwd(), 'packages/create-unimp'));
 const isCreateMode = !fs.existsSync(path.join(projectDir, 'src/manifest.json'));
 
 function replaceInFile(filePath, replacements) {
@@ -119,18 +118,13 @@ async function initProject() {
 }
 
 async function main() {
-  if (isDevMode) {
-    console.log('🔧 开发模式：跳过初始化');
-    return;
-  }
-
   console.log('\n🚀 初始化项目\n');
 
   // Check if already initialized
-  const manifestPath = path.join(projectDir, 'src/manifest.json');
-  if (fs.existsSync(manifestPath)) {
-    const manifest = fs.readFileSync(manifestPath, 'utf-8');
-    if (!manifest.includes('__PROJECT_NAME__')) {
+  const pkgPath = path.join(projectDir, 'package.json');
+  if (fs.existsSync(pkgPath)) {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+    if (!pkg.name.startsWith('__')) {
       console.log('✅ 项目已初始化，跳过此步骤');
       return;
     }
