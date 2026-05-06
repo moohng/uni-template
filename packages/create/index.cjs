@@ -105,9 +105,9 @@ async function initProject() {
   console.log('\n🧹 清理开发专用文件...');
 
   const ignoreList = getIgnoreList(projectDir);
-  // scripts/ needs to be deleted last (this script may be inside it)
+  // packages/ needs to be deleted last (this script lives inside it)
   for (const dir of ignoreList) {
-    if (dir === 'scripts') continue;
+    if (dir === 'packages') continue;
     const dirPath = path.join(projectDir, dir);
     if (fs.existsSync(dirPath)) {
       deleteDir(dirPath);
@@ -130,12 +130,12 @@ async function initProject() {
   console.log('   pnpm install');
   console.log('   pnpm dev:mp-weixin\n');
 
-  // Clean up self and scripts/ last
-  const scriptsDir = path.join(projectDir, 'scripts');
-  if (fs.existsSync(scriptsDir)) {
-    deleteDir(scriptsDir);
+  // Clean up self (inside packages/) last
+  const packagesDir = path.join(projectDir, 'packages');
+  if (fs.existsSync(packagesDir)) {
+    deleteDir(packagesDir);
     console.log('🧹 清理初始化文件...');
-    console.log('  ✅ 删除 scripts/');
+    console.log('  ✅ 删除 packages/');
   }
 }
 

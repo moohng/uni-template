@@ -37,8 +37,9 @@ create my-project
 脚手架会自动：
 
 1. 从 GitHub 拉取最新模板
-2. 清理开发专用目录（`.github/`、`.opencode/`、`packages/`、`scripts/`）
+2. 按 `.initignore` 清理开发专用文件
 3. 替换项目配置占位符
+4. 清理 Git 历史
 
 安装依赖并启动开发服务器：
 
@@ -76,6 +77,9 @@ git push origin create-v1.0.0
 
 | 版本 | 说明 |
 |------|------|
+| 1.0.4 | 统一初始化脚本，支持 `.initignore` 配置 |
+| 1.0.3 | 移除自动 Git 初始化 |
+| 1.0.2 | 添加自动发布 workflow |
 | 1.0.0 | 首次发布 |
 
 ## License

@@ -58,7 +58,7 @@ pnpm dev:mp-weixin
 
 1. 提示输入项目配置（名称、描述、AppID）
 2. 替换配置占位符
-3. 清理开发专用目录（`.github/`、`.opencode/`、`packages/`、`scripts/`）
+3. 按 `.initignore` 清理开发专用文件
 4. 清理 Git 历史
 
 初始化完成后，初始化脚本会自动删除，不会残留。
