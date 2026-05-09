@@ -34,10 +34,6 @@ export default defineConfig({
       col: 'flex flex-col',
       'col-center': 'flex flex-col items-center justify-center',
       'row-between': 'flex items-center justify-between',
-      'card-base': 'bg-white rounded-2xl p-4 shadow-sm',
-      'text-main': 'text-slate-800 text-base font-medium',
-      'text-sub': 'text-slate-400 text-sm',
-      'btn': 'flex items-center justify-center gap-2 block p-4 bg-slate-100 text-slate-600 font-bold rounded-full transition-all active:scale-95',
     },
   ],
   transformers: [
@@ -75,14 +71,16 @@ export default defineConfig({
     ['bg-primary_30', { 'background-color': 'var(--primary-30)' }],
     ['bg-primary/80', { 'background-color': 'var(--primary-80)' }],
     ['bg-primary_80', { 'background-color': 'var(--primary-80)' }],
-    ['shadow-primary/30', { '--un-shadow-color': 'var(--primary-30)' }],
-    ['shadow-primary_30', { '--un-shadow-color': 'var(--primary-30)' }],
     ['border-primary/10', { 'border-color': 'var(--primary-10)' }],
     ['border-primary_10', { 'border-color': 'var(--primary-10)' }],
     ['border-primary/20', { 'border-color': 'var(--primary-20)' }],
     ['border-primary_20', { 'border-color': 'var(--primary-20)' }],
     ['shadow-primary/10', { '--un-shadow-color': 'var(--primary-10)' }],
     ['shadow-primary_10', { '--un-shadow-color': 'var(--primary-10)' }],
+    ['shadow-primary/20', { '--un-shadow-color': 'var(--primary-20)' }],
+    ['shadow-primary_20', { '--un-shadow-color': 'var(--primary-20)' }],
+    ['shadow-primary/30', { '--un-shadow-color': 'var(--primary-30)' }],
+    ['shadow-primary_30', { '--un-shadow-color': 'var(--primary-30)' }],
   ],
   theme: {
     colors: {
@@ -91,8 +89,6 @@ export default defineConfig({
       success: 'var(--success)',
       warning: 'var(--warning)',
       error: 'var(--error)',
-      'lucky-from': 'var(--lucky-from)',
-      'lucky-to': 'var(--lucky-to)',
       white: '#ffffff',
     },
     // 文本颜色

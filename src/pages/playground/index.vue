@@ -20,13 +20,13 @@
 
       <!-- 预览效果 -->
       <view class="w-full space-y-4">
-        <view class="bg-lucky p-6 rounded-2xl text-white">
-          <view class="font-bold mb-1">主题渐变 (bg-lucky)</view>
+        <view class="p-6 bg-primary rounded-2xl text-white">
+          <view class="font-bold mb-1">主题 (bg-primary)</view>
           <view class="text-sm opacity-80">会自动随主题颜色变化。</view>
         </view>
 
         <button class="reset-btn btn bg-primary text-white shadow-lg" @click="onToast">
-          主题色按钮 (bg-primary)
+          主题色按钮
         </button>
       </view>
     </view>
@@ -48,9 +48,3 @@ const onToast = async () => {
   }
 };
 </script>
-
-<style>
-page {
-  background-color: #f8fafc;
-}
-</style>

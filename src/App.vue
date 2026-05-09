@@ -60,10 +60,6 @@ page {
   --warning: #f0ad4e;
   --error: #dd524d;
 
-  /* 渐变色变量 */
-  --lucky-from: #ef4444;
-  --lucky-to: #db2777;
-
   /* 文本颜色 */
   --text-base: #1e293b;
   --text-disabled: #999;
@@ -91,8 +87,6 @@ page {
   --primary-20: rgba(30, 41, 59, 0.2);
   --primary-30: rgba(30, 41, 59, 0.3);
   --primary-80: rgba(30, 41, 59, 0.8);
-  --lucky-from: #0F172B;
-  --lucky-to: #020618;
 }
 
 .theme-forest {
@@ -102,8 +96,6 @@ page {
   --primary-20: rgba(16, 185, 129, 0.2);
   --primary-30: rgba(16, 185, 129, 0.3);
   --primary-80: rgba(16, 185, 129, 0.8);
-  --lucky-from: #10b981;
-  --lucky-to: #059669;
 }
 
 .theme-sunset {
@@ -113,8 +105,6 @@ page {
   --primary-20: rgba(249, 115, 22, 0.2);
   --primary-30: rgba(249, 115, 22, 0.3);
   --primary-80: rgba(249, 115, 22, 0.8);
-  --lucky-from: #f97316;
-  --lucky-to: #dc2626;
 }
 
 .theme-sky {
@@ -124,8 +114,6 @@ page {
   --primary-20: rgba(14, 165, 233, 0.2);
   --primary-30: rgba(14, 165, 233, 0.3);
   --primary-80: rgba(14, 165, 233, 0.8);
-  --lucky-from: #0ea5e9;
-  --lucky-to: #38bdf8;
 }
 
 .theme-galaxy {
@@ -135,8 +123,6 @@ page {
   --primary-20: rgba(139, 92, 246, 0.2);
   --primary-30: rgba(139, 92, 246, 0.3);
   --primary-80: rgba(139, 92, 246, 0.8);
-  --lucky-from: #8b5cf6;
-  --lucky-to: #4f46e5;
 }
 
 .theme-sakura {
@@ -146,18 +132,11 @@ page {
   --primary-20: rgba(236, 72, 153, 0.2);
   --primary-30: rgba(236, 72, 153, 0.3);
   --primary-80: rgba(236, 72, 153, 0.8);
-  --lucky-from: #ec4899;
-  --lucky-to: #be185d;
 }
 
 /* 辅助样式 */
 .mb-safe { margin-bottom: env(safe-area-inset-bottom); }
 .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
-
-.bg-lucky {
-  background: linear-gradient(to bottom right, var(--lucky-from), var(--lucky-to));
-  box-shadow: 0 10rpx 30rpx var(--primary-30);
-}
 
 .reset-btn {
   margin: 0; padding: 0; line-height: inherit; background-color: transparent; border: 0; outline: 0; font-size: inherit;
